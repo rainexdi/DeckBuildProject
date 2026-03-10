@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    void TakeDamage (int damage)
+    public void TakeDamage(int damage)
     {
         PlayerHealthManager.Instance.TakeDamage(damage);    
     }

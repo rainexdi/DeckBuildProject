@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using CodeMonkey.Utils;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using System.Runtime.CompilerServices;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform spawnPoint;   
     [SerializeField] private float bulletLifeTime = 2f;
+    [SerializeField] private PlayerStatsSO playerStats;
 
     private void Awake()
     {
@@ -44,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             var runtimeBullet = bullet.AddComponent<Bullet>();
             rb.AddForce(aimDirection * shootForce, ForceMode2D.Impulse);
-            runtimeBullet.Intialize(bulletLifeTime);
+            runtimeBullet.Intialize(bulletLifeTime, playerStats.attackDamage);
         }
     } 
 }
@@ -52,26 +54,32 @@ public class PlayerAttack : MonoBehaviour
 public class Bullet : MonoBehaviour
 {
     private bool _initialized = false; 
-    public void Intialize(float lifeTime)
+    private int _damage;
+    public void Intialize(float lifeTime, int damage)
     {
+        _damage = damage;
         Destroy(gameObject, lifeTime);
         _initialized = true;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            Destroy(gameObject);
+            damageable.TakeDamage(_damage);
+            Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            Destroy(gameObject);
+            damageable.TakeDamage(_damage);
+            Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
-        
+
     }
 
     private void Start()

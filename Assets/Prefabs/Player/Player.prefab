@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 2542524787387124626}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -292,6 +292,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6096138746277252649, guid: c1736ccc15ab87d4faa9b9d2c631a09f, type: 3}
   spawnPoint: {fileID: 8907247124993782630}
   bulletLifeTime: 2
+  playerStats: {fileID: 0}
 --- !u!1 &8861790022979185335
 GameObject:
   m_ObjectHideFlags: 0
