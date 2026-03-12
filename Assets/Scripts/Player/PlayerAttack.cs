@@ -39,7 +39,8 @@ public class PlayerAttack : MonoBehaviour
         Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
         Vector3 aimDirection = (mousePosition - aimTransform.position).normalized;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+        else 
         {
             // Spawns the bullet and fires it in the direction of the aim.
             GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
@@ -69,6 +70,7 @@ public class Bullet : MonoBehaviour
             damageable.TakeDamage(_damage);
             Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -79,6 +81,7 @@ public class Bullet : MonoBehaviour
             damageable.TakeDamage(_damage);
             Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
+        Destroy(gameObject);
 
     }
 

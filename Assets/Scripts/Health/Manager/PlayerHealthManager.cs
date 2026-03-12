@@ -21,6 +21,7 @@ public class PlayerHealthManager : MonoBehaviour
     }
 
     public void TakeDamage(int damage) => healthComponent.TakeDamage(damage);
+    public void ResetHealth() => healthComponent.ResetHealth();
     public int CurrentHealth => healthComponent.CurrentHealth;
     public int MaxHealth => healthComponent.MaxHealth;
 }

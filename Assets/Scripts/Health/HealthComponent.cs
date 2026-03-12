@@ -23,4 +23,10 @@ public class HealthComponent : MonoBehaviour
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
         if (CurrentHealth <= 0) OnDeath?.Invoke();
     }
+
+    public void ResetHealth()
+    {
+        CurrentHealth = MaxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+    }
 }

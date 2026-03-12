@@ -6,4 +6,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         PlayerHealthManager.Instance.TakeDamage(damage);    
     }
+
+    public void ResetHealth()
+    {
+        PlayerHealthManager.Instance.ResetHealth();
+    }
 }

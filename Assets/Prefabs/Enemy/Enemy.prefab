@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8925899927032240808}
   - component: {fileID: 8765266649449229176}
   - component: {fileID: 7380209008020190072}
+  - component: {fileID: -4337432422332587014}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -193,3 +194,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b981361235bd5944afb1ef69000b9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
+  charStats: {fileID: 11400000, guid: 385b5a482329cd748bddbf4246f7f207, type: 2}
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-4337432422332587014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942177955985774366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6e9e82c78b4174f9051a8a49a2d8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
