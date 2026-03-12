@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using CodeMonkey.Utils;
-using UnityEngine.InputSystem;
 using Unity.VisualScripting;
 using System.Runtime.CompilerServices;
 
@@ -13,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform spawnPoint;   
     [SerializeField] private float bulletLifeTime = 2f;
     [SerializeField] private PlayerStatsSO playerStats;
+    public Vector2 PointerPosition { get; set; }
 
     private void Awake()
     {
@@ -27,8 +26,8 @@ public class PlayerAttack : MonoBehaviour
     private void HandleAim()
     {
         // Gets the mouse position in world space and calculates the direction from the player to the mouse. Then it rotates the aimTransform to point in that direction.
-        Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
-        Vector3 aimDirection = (mousePosition - aimTransform.position).normalized;
+        Vector3 mousePos = PointerPosition;
+        Vector3 aimDirection = (mousePos - aimTransform.position).normalized;
 
         // Calculate the angle in degrees and set the rotation of the aimTransform
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
@@ -36,8 +35,8 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Shoot ()
     {
-        Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
-        Vector3 aimDirection = (mousePosition - aimTransform.position).normalized;
+        Vector3 mousePos = PointerPosition;
+        Vector3 aimDirection = (mousePos - aimTransform.position).normalized;
 
         if (!Mouse.current.leftButton.wasPressedThisFrame) return;
         else 
