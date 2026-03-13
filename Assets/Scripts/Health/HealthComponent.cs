@@ -26,6 +26,7 @@ public class HealthComponent : MonoBehaviour
 
     public void ResetHealth()
     {
+        MaxHealth = charStats.maxHealth;
         CurrentHealth = MaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }

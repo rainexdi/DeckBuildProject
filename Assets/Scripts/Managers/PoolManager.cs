@@ -11,7 +11,7 @@ public class PoolManager : MonoBehaviour
     private Dictionary<GameObject, GameObject> pooledObjectOrigin = new Dictionary<GameObject, GameObject>();
 
     [Header("Pool Settings")]
-    [SerializeField] private GameObject prefabToPool;
+    [SerializeField] private GameObject[] prefabToPool;
     [SerializeField] private int poolSize = 10;
 
 
@@ -26,8 +26,13 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
-        InitializePool(prefabToPool);
+        foreach (var prefab in prefabToPool)
+        {
+            InitializePool(prefab);
+
+        }
     }
+    
 
     private void InitializePool(GameObject prefab)
     {
@@ -58,14 +63,15 @@ public class PoolManager : MonoBehaviour
         if (poolDictionary.ContainsKey(prefab) == false)
                 InitializePool(prefab);
 
-        // Get an object from the pool
-        GameObject objectToGet = poolDictionary[prefab].Dequeue();
-
         // If the pool is empty, create a new object to ensure we always have one available
-        if (poolDictionary[prefab].Count == 0)
+        int minimumPoolSize = 3; // You can adjust this value based on your needs
+        if (poolDictionary[prefab].Count < minimumPoolSize)
         {
             CreateNewObject(prefab);
         }
+
+        // Get an object from the pool
+        GameObject objectToGet = poolDictionary[prefab].Dequeue();
 
         // Set parent to null, determine position and activate the object 
         objectToGet.transform.parent = null;

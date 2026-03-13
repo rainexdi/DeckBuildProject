@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         aimTransform.eulerAngles = new Vector3(0, 0, angle);
     }
-    private void Shoot ()
+    public void Shoot ()
     {
         Vector3 mousePos = PointerPosition;
         Vector3 aimDirection = (mousePos - aimTransform.position).normalized;
@@ -42,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
         else 
         {
             // Spawns the bullet and fires it in the direction of the aim.
-            GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
+            GameObject bullet = PoolManager.instance.GetObject(bulletPrefab, spawnPoint);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             var runtimeBullet = bullet.AddComponent<Bullet>();
             rb.AddForce(aimDirection * shootForce, ForceMode2D.Impulse);
@@ -55,10 +55,11 @@ public class Bullet : MonoBehaviour
 {
     private bool _initialized = false; 
     private int _damage;
+
     public void Intialize(float lifeTime, int damage)
     {
         _damage = damage;
-        Destroy(gameObject, lifeTime);
+        PoolManager.instance.ReturnObject(gameObject, lifeTime);    
         _initialized = true;
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,7 +70,7 @@ public class Bullet : MonoBehaviour
             damageable.TakeDamage(_damage);
             Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
-        Destroy(gameObject);
+        PoolManager.instance.ReturnObject(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -80,7 +81,7 @@ public class Bullet : MonoBehaviour
             damageable.TakeDamage(_damage);
             Debug.Log("Bullet hit " + other.gameObject.name + " for " + _damage + " damage.");
         }
-        Destroy(gameObject);
+        PoolManager.instance.ReturnObject(gameObject);
 
     }
 
@@ -88,7 +89,7 @@ public class Bullet : MonoBehaviour
     {
         if (!_initialized)
         {
-            Destroy(gameObject, 2f);
+            PoolManager.instance.ReturnObject(gameObject, 2f);
         }
     }
 }
