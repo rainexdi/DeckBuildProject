@@ -64,14 +64,25 @@ public class PoolManager : MonoBehaviour
                 InitializePool(prefab);
 
         // If the pool is empty, create a new object to ensure we always have one available
-        int minimumPoolSize = 3; // You can adjust this value based on your needs
-        if (poolDictionary[prefab].Count < minimumPoolSize)
+        int minimumPoolSize = 40; // You can adjust this value based on your needs
+        while (poolDictionary[prefab].Count < minimumPoolSize)
         {
             CreateNewObject(prefab);
         }
 
         // Get an object from the pool
         GameObject objectToGet = poolDictionary[prefab].Dequeue();
+
+        // Safety check: ensure we're not dequeuing an active object
+        if (objectToGet.activeSelf)
+        {
+            Debug.LogWarning($"Object {objectToGet.name} is still active! Creating fresh object instead.", this);
+            // Put it back in the queue (don't lose it)
+            poolDictionary[prefab].Enqueue(objectToGet);
+            // Create a new object instead
+            CreateNewObject(prefab);
+            objectToGet = poolDictionary[prefab].Dequeue();
+        }
 
         // Set parent to null, determine position and activate the object 
         objectToGet.transform.parent = null;
@@ -81,14 +92,15 @@ public class PoolManager : MonoBehaviour
         return objectToGet;
     }
 
-    public void ReturnObject (GameObject objToReturn, float delay = 0.001f)
+    public void ReturnObject (GameObject objToReturn, float delay = 0f)
     {
         StartCoroutine(ReturnToPool(objToReturn, delay));
     }
 
     private IEnumerator ReturnToPool (GameObject objToReturn, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        if (delay > 0f)
+           yield return new WaitForSeconds(delay);
         
         // Get the original prefab of the object being returned
         GameObject originalPrefab  = pooledObjectOrigin[objToReturn];

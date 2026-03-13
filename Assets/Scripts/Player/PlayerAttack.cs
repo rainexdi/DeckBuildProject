@@ -44,8 +44,12 @@ public class PlayerAttack : MonoBehaviour
             // Spawns the bullet and fires it in the direction of the aim.
             GameObject bullet = PoolManager.instance.GetObject(bulletPrefab, spawnPoint);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            var runtimeBullet = bullet.AddComponent<Bullet>();
-            rb.AddForce(aimDirection * shootForce, ForceMode2D.Impulse);
+            var runtimeBullet = bullet.GetComponent<Bullet>();
+            if (runtimeBullet == null)
+            {
+                runtimeBullet = bullet.AddComponent<Bullet>();  
+            }
+            rb.linearVelocity = aimDirection * shootForce;
             runtimeBullet.Intialize(bulletLifeTime, playerStats.attackDamage);
         }
     } 

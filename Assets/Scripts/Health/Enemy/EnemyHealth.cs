@@ -8,7 +8,22 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         // Get the HealthComponent attached to the enemy and subscribe to the OnDeath event to handle enemy death logic
         healthComponent = GetComponent<HealthComponent>();
-        healthComponent.OnDeath.AddListener(HandleDeath);
+    }
+
+    private void OnEnable()
+    {
+        if (healthComponent != null)
+        {
+            healthComponent.OnDeath.AddListener(HandleDeath);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (healthComponent != null)
+        {
+            healthComponent.OnDeath.RemoveListener(HandleDeath);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -23,7 +38,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public void HandleDeath()
     {
         // On Death we send the GameObject back to the pool and reset its health
-        PoolManager.instance.ReturnObject(gameObject, 0);
+        PoolManager.instance.ReturnObject(gameObject, 0); 
         ResetHealth();
     }
 

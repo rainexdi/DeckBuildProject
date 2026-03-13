@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 942177955985774366, guid: 182d80d70f085be4093e0f43af5c694a, type: 3}
-  cooldown: 2
+  cooldown: 1
   spawnPoints:
   - {fileID: 494803517}
   - {fileID: 1247485726}
@@ -608,8 +608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35ba68291964df45bf93a1fb53e34af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
-  prefabToPool: {fileID: 942177955985774366, guid: 182d80d70f085be4093e0f43af5c694a, type: 3}
-  poolSize: 10
+  prefabToPool:
+  - {fileID: 942177955985774366, guid: 182d80d70f085be4093e0f43af5c694a, type: 3}
+  - {fileID: 6096138746277252649, guid: c1736ccc15ab87d4faa9b9d2c631a09f, type: 3}
+  poolSize: 100
 --- !u!4 &636331949
 Transform:
   m_ObjectHideFlags: 0
