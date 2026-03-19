@@ -4,7 +4,7 @@ public class PlayerHealthManager : MonoBehaviour
 {
     public static PlayerHealthManager Instance { get; private set; }
 
-    private HealthComponent healthComponent;
+    public HealthComponent healthComponent;
 
     private void Awake()
     {

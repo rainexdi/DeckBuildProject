@@ -29,7 +29,6 @@ public class PoolManager : MonoBehaviour
         foreach (var prefab in prefabToPool)
         {
             InitializePool(prefab);
-
         }
     }
     
