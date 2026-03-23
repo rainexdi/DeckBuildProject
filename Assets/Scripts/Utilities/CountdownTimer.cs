@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CountdownTimer : MonoBehaviour
+public class CountdownTimer : MonoBehaviour 
 {
     [SerializeField] private float duration = 300f; // 5 minutes
     private float timeRemaining;

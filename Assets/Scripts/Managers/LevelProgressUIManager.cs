@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class LevelProgressUIManager : MonoBehaviour
 {
-    private int killCount = 0;
+    [SerializeField] private KillCounter killCounter;
     [SerializeField] private TextMeshProUGUI killCountText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private CountdownTimer countdownTimer;
+    [SerializeField] private GameObject spawner;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerAttack playerAttack;
 
     private void Awake()
     {
@@ -45,7 +48,6 @@ public class LevelProgressUIManager : MonoBehaviour
 
     private void onEnemyKilled()
     {
-        killCount++;
         UpdateKillCountUI();
     }
 
@@ -53,7 +55,7 @@ public class LevelProgressUIManager : MonoBehaviour
     {
         if (killCountText != null)
         {
-            killCountText.text = $"Kills: {killCount}";
+            killCountText.text = $"Kills: {killCounter.killCount}";
         }
     }
 
@@ -67,7 +69,28 @@ public class LevelProgressUIManager : MonoBehaviour
 
     private void OnTimerComplete()
     {
-        Debug.Log("Timer complete!");
-        // Add your logic here (end level, show game over screen, etc.)
+        EnemyMovement[] allEnemies = FindObjectsByType<EnemyMovement>(FindObjectsSortMode.None);
+        foreach (EnemyMovement enemy in allEnemies)
+        {
+            PoolManager.instance.ReturnObject(enemy.gameObject);
+        }
+
+        if (spawner != null)
+        {
+            spawner.SetActive(false);
+        }
+
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
+        if (playerAttack != null)
+        {
+            playerAttack.enabled = false;
+        }
+
+        WaitForSeconds wait = new WaitForSeconds(3f);
+        killCounter.ResetKillCount();
     }
 }
