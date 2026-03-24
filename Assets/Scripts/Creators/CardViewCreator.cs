@@ -15,11 +15,12 @@ public class CardViewCreator : MonoBehaviour
         }
         Instance = this;
     }
-    public CardView CreateCardView(Vector3 position, Quaternion rotation)
+    public CardView CreateCardView(Card card, Vector3 position, Quaternion rotation)
     {
         CardView cardView = Instantiate(cardViewPrefab, position, rotation);
         cardView.transform.localScale = Vector3.zero;
         cardView.transform.DOScale(Vector3.one, 0.15f);
+        cardView.SetCardData(card);
         return cardView;
     }
 

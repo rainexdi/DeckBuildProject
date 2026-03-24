@@ -12,6 +12,8 @@ public class RewardHandler : MonoBehaviour
     [SerializeField] private HandView handView;
     [SerializeField] private CountdownTimer countdownTimer;
     [SerializeField] private KillCounter killCounter;
+    [SerializeField] private CardRewardSystem cardRewardSystem;
+    [SerializeField] private CardViewCreator cardViewCreator;
 
     private void OnEnable()
     {
@@ -49,8 +51,16 @@ public class RewardHandler : MonoBehaviour
             return;
         }
 
-        Debug.Log("Drawing card as reward...");
-        CardView cardView = CardViewCreator.Instance.CreateCardView(Vector3.zero, Quaternion.identity);
+        CardData cardData = cardRewardSystem.GetRandomCard();
+        if (cardData == null)
+        {
+            Debug.LogError("No card data available! Check if CardRewardSystem is properly set up.");
+            return;
+        }
+
+        Debug.Log("Drawing card:" + cardData.cardName);
+        Card card = new(cardData);
+        CardView cardView = CardViewCreator.Instance.CreateCardView (card, Vector3.zero, Quaternion.identity);
 
         if (cardView == null)
         {
@@ -58,6 +68,7 @@ public class RewardHandler : MonoBehaviour
             return;
         }
 
+        cardView.SetCardData(card);
         StartCoroutine(handView.AddCard(cardView));
         
         UpdateButtonState();

@@ -89,8 +89,5 @@ public class LevelProgressUIManager : MonoBehaviour
         {
             playerAttack.enabled = false;
         }
-
-        WaitForSeconds wait = new WaitForSeconds(3f);
-        killCounter.ResetKillCount();
     }
 }

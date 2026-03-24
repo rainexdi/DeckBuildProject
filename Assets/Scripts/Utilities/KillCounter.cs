@@ -6,6 +6,7 @@ public class KillCounter : MonoBehaviour
     private void OnEnable()
     {
         EnemyHealth.OnEnemyDeath.AddListener(onEnemyKilled);
+        ResetKillCount();
     }
 
     private void OnDisable()
@@ -22,7 +23,6 @@ public class KillCounter : MonoBehaviour
 
     public void ResetKillCount()
     {
-               killCount = 0;
-
+        killCount = 0;
     }
 }
