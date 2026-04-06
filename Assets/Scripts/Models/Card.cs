@@ -13,4 +13,10 @@ public class Card
     {
         data = cardData;
     }
+
+    public void Play()
+    {
+        data.ExecuteEffects();
+        Debug.Log($"Card '{Name}' was played!");
+    }
 }

@@ -25,6 +25,7 @@ public class CardView : MonoBehaviour
     {
         // Manual hover detection - reliable alternative to OnMouseEnter/Exit
         DetectHover();
+        DetectClick();
     }
 
     private void DetectHover()
@@ -79,5 +80,34 @@ public class CardView : MonoBehaviour
         }
 
         // wrapper.SetActive(true);
+    }
+
+    private void PlayCard()
+    {
+        if (Card == null) return;
+
+        Card.Play();  // ← This calls CardData.ExecuteEffects()
+                      //   which creates and runs all effects
+
+        Destroy(gameObject);
+    }
+
+    private void OnMouseClicked()
+    {
+        PlayCard();
+    }
+
+    private void DetectClick()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+
+            if (cardCollider.OverlapPoint(mouseWorldPos))
+            {
+                OnMouseClicked();
+            }
+        }
     }
 }
