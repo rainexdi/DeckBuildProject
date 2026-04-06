@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class RewardHandler : MonoBehaviour
 {
+
     [SerializeField] private Button rewardButton;
     [SerializeField] private TextMeshProUGUI rewardText;
     [SerializeField] private GameObject rewardPanel;
     [SerializeField] private HandView handView;
     [SerializeField] private CountdownTimer countdownTimer;
     [SerializeField] private KillCounter killCounter;
-    [SerializeField] private CardRewardSystem cardRewardSystem;
-    [SerializeField] private CardViewCreator cardViewCreator;
+
+    private int cardsToDraw = 1;
+
 
     private void OnEnable()
     {
@@ -24,7 +26,7 @@ public class RewardHandler : MonoBehaviour
         
         if (rewardButton != null)
         {
-            rewardButton.onClick.AddListener(DrawCard);
+            rewardButton.onClick.AddListener(OnDrawCardButtonClicked);
         }
         
         UpdateButtonState();
@@ -39,38 +41,17 @@ public class RewardHandler : MonoBehaviour
         
         if (rewardButton != null)
         {
-            rewardButton.onClick.RemoveListener(DrawCard);
+            rewardButton.onClick.RemoveListener(OnDrawCardButtonClicked);
         }
     }
 
-    private void DrawCard()
+    private void OnDrawCardButtonClicked()
     {
-        if (!handView.hasSpace)
-        {
-            Debug.LogWarning("Cannot draw card: hand is full!");
-            return;
-        }
 
-        CardData cardData = cardRewardSystem.GetRandomCard();
-        if (cardData == null)
-        {
-            Debug.LogError("No card data available! Check if CardRewardSystem is properly set up.");
-            return;
-        }
-
-        Debug.Log("Drawing card:" + cardData.cardName);
-        Card card = new(cardData);
-        CardView cardView = CardViewCreator.Instance.CreateCardView (card, Vector3.zero, Quaternion.identity);
-
-        if (cardView == null)
-        {
-            Debug.LogError("Failed to create card! Check if CardViewCreator prefab is assigned.");
-            return;
-        }
-
-        cardView.SetCardData(card);
-        StartCoroutine(handView.AddCard(cardView));
-        
+            if (CardDrawSystem.Instance != null)
+            {
+                CardDrawSystem.Instance.DrawCards(cardsToDraw);
+            }
         UpdateButtonState();
     }
 
@@ -78,33 +59,36 @@ public class RewardHandler : MonoBehaviour
     {
         if (rewardButton != null)
         {
-            rewardButton.interactable = handView != null && handView.hasSpace;
+            bool canDraw = handView.CanDrawMore(cardsToDraw);
+            rewardButton.interactable = canDraw;
         }
     }
 
     private void OnTimerComplete()
     {
+        cardsToDraw = 1;
+
         switch (killCounter.killCount)
         {
             case > 10 and < 20:
-                handView.maxCards += 1;
+                cardsToDraw += 1;
                 break;
             case >= 20 and < 30:
-                handView.maxCards += 2;
+                cardsToDraw += 2;
                 break;
             case >= 30 and < 40:
-                handView.maxCards += 3;
+                cardsToDraw += 3;
                 break;
             case >= 40:
-                handView.maxCards += 4;
+                cardsToDraw += 4;
                 break;
             default:
-                handView.maxCards += 0;
+                cardsToDraw += 0;
                 break;
         }
 
         rewardPanel.SetActive(true);
-        rewardText.text = "Congratulations! You killed " + killCounter.killCount + " enemies! You have access to " + handView.maxCards + " cards.";
+        rewardText.text = "Congratulations! You killed " + killCounter.killCount + " enemies! You have access to " + cardsToDraw + " cards.";
         
         UpdateButtonState();
     }

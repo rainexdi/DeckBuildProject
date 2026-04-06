@@ -65,8 +65,8 @@ public class CardView : MonoBehaviour
     private void OnCardHoverEnter()
     {
 
-        wrapper.SetActive(false);
-        Vector3 hoverPos = new(transform.position.x, -2, transform.position.z);
+        // wrapper.SetActive(false);
+        Vector3 hoverPos = new(0, -2, transform.position.z);
         CardHoverSystem.Instance.Show(Card, hoverPos);
     }
 
@@ -78,6 +78,6 @@ public class CardView : MonoBehaviour
             CardHoverSystem.Instance.Hide();
         }
 
-        wrapper.SetActive(true);
+        // wrapper.SetActive(true);
     }
 }

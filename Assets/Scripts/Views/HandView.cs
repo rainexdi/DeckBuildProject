@@ -9,7 +9,7 @@ public class HandView : MonoBehaviour
 {
     [SerializeField] private SplineContainer splineContainer;
     private readonly List<CardView> cards = new();
-    public float maxCards = 3;
+    public float maxCards = 10f;
 
     public bool isFull => cards.Count >= maxCards;
     public bool hasSpace => cards.Count < maxCards;
@@ -44,5 +44,10 @@ public class HandView : MonoBehaviour
             cards[i].transform.DORotateQuaternion(rotation, duration);
         }
         yield return new WaitForSeconds(duration);
+    }
+
+    public bool CanDrawMore(int cardsToDraw)
+    {
+        return cards.Count < cardsToDraw && cards.Count < maxCards;
     }
 }
