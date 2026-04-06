@@ -2532,6 +2532,7 @@ MonoBehaviour:
   cardRewardSystem: {fileID: 547163229}
   cardViewCreator: {fileID: 528346092}
   handView: {fileID: 2018526279}
+  rewardHandler: {fileID: 5438055131271151051}
 --- !u!1 &1372415811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,7 +3541,6 @@ MonoBehaviour:
   handView: {fileID: 2018526279}
   countdownTimer: {fileID: 2101734066}
   killCounter: {fileID: 424508571}
-  notDrawn: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

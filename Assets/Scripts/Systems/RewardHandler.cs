@@ -14,7 +14,8 @@ public class RewardHandler : MonoBehaviour
     [SerializeField] private CountdownTimer countdownTimer;
     [SerializeField] private KillCounter killCounter;
 
-    private int cardsToDraw = 1;
+    private int cardsToDraw = 0;
+    private int cardsDrawnThisReward = 0;
 
 
     private void OnEnable()
@@ -66,7 +67,8 @@ public class RewardHandler : MonoBehaviour
 
     private void OnTimerComplete()
     {
-        cardsToDraw = 1;
+        cardsToDraw = 0;
+        cardsDrawnThisReward = 0;
 
         switch (killCounter.killCount)
         {
@@ -91,5 +93,20 @@ public class RewardHandler : MonoBehaviour
         rewardText.text = "Congratulations! You killed " + killCounter.killCount + " enemies! You have access to " + cardsToDraw + " cards.";
         
         UpdateButtonState();
+    }
+
+    public void IncreaseCardsToDraw(int amount)
+    {
+        cardsToDraw += amount;
+    }
+
+    public void OnRewardCardDrawn(int amount)
+    {
+        cardsDrawnThisReward += amount;
+    }
+
+    public bool CanDrawFromReward(int amount)
+    {
+        return cardsDrawnThisReward + amount <= cardsToDraw;
     }
 }

@@ -9,7 +9,7 @@ public class HandView : MonoBehaviour
 {
     [SerializeField] private SplineContainer splineContainer;
     private readonly List<CardView> cards = new();
-    public float maxCards = 10f;
+    public float maxCards = 5f;
 
     public bool isFull => cards.Count >= maxCards;
     public bool hasSpace => cards.Count < maxCards;
@@ -22,14 +22,22 @@ public class HandView : MonoBehaviour
         }
 
         cards.Add(cardView);
+        cardView.OnCardPlayed += RemoveCard;
         yield return UpdateCardPositions(0.15f);
+    }
+
+    private void RemoveCard(CardView cardView)
+    {
+        cards.Remove(cardView);
+        cardView.OnCardPlayed -= RemoveCard;
+        StartCoroutine(UpdateCardPositions(0.15f));
     }
 
     public IEnumerator UpdateCardPositions(float duration)
     {
         if (cards.Count == 0) yield break;
 
-        float cardSpacing = 1f / maxCards;
+        float cardSpacing = 2f / maxCards;
         float firstCardPosition = 0.5f - (cardSpacing * (cards.Count - 1)) / 2f;
         Spline spline = splineContainer.Spline;
 

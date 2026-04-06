@@ -1,5 +1,6 @@
-using UnityEngine;
+using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CardView : MonoBehaviour
@@ -12,6 +13,8 @@ public class CardView : MonoBehaviour
     
     private Collider2D cardCollider;
     private bool isCurrentlyHovered = false;
+
+    public event Action<CardView> OnCardPlayed;
 
     public Card Card { get; private set; }
 
@@ -86,8 +89,8 @@ public class CardView : MonoBehaviour
     {
         if (Card == null) return;
 
-        Card.Play();  // ← This calls CardData.ExecuteEffects()
-                      //   which creates and runs all effects
+        Card.Play(); 
+        OnCardPlayed?.Invoke(this);
 
         Destroy(gameObject);
     }
@@ -107,6 +110,7 @@ public class CardView : MonoBehaviour
             if (cardCollider.OverlapPoint(mouseWorldPos))
             {
                 OnMouseClicked();
+                OnCardHoverExit();
             }
         }
     }

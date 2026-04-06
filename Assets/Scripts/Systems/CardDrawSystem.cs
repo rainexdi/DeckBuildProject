@@ -8,6 +8,7 @@ public class CardDrawSystem : MonoBehaviour
     [SerializeField] private CardRewardSystem cardRewardSystem;
     [SerializeField] private CardViewCreator cardViewCreator;
     [SerializeField] private HandView handView;
+    [SerializeField] private RewardHandler rewardHandler;  // Add this field
 
 
     private void Awake()
@@ -54,30 +55,25 @@ public class CardDrawSystem : MonoBehaviour
 
     public bool DrawCards(int count)
     {
-        // Check if we're not exceeding the reward limit
-        if (!handView.CanDrawMore(count))
-        {
-            Debug.LogWarning($"Cannot draw {count} cards: reached reward card limit!");
-            return false;
-        }
-
-        bool allSucessful = true;
+        bool allSuccessful = true;
 
         for (int i = 0; i < count; i++)
         {
-            bool cardDrawSucessful = DrawCard();
+            bool cardDrawSuccessful = DrawCard();
 
-            if (!cardDrawSucessful)
+            if (!cardDrawSuccessful)
             {
-                allSucessful = false;
+                allSuccessful = false;
                 break;
             }   
         }
-        return allSucessful;
+        return allSuccessful;
     }
 
     public bool CanDrawCard()
     {
         return handView != null && handView.hasSpace;
     }
+
+    public RewardHandler GetRewardHandler() => rewardHandler;  // Add this getter
 }
