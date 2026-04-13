@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -758,6 +759,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1476986307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.Physics2DRaycaster
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &528346090
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,13 +866,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardRewardSystem
   rewardCards:
   - cardData: {fileID: 11400000, guid: d9a447bd0905a6a44b350c2cf0ba41a0, type: 2}
-    quantity: 3
+    quantity: 2
   - cardData: {fileID: 11400000, guid: 48f3723462c4fe74895eef71e37a3f0e, type: 2}
-    quantity: 1
+    quantity: 2
   - cardData: {fileID: 11400000, guid: 0ca93fb5a0d0af0498f8aa991e447fae, type: 2}
     quantity: 2
   - cardData: {fileID: 11400000, guid: 43ed104df8efe3248be175343fb730dc, type: 2}
-    quantity: 5
+    quantity: 1
 --- !u!1 &575650341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,7 +1134,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1104981547}
     m_Modifications:
     - target: {fileID: 1114914462337460802, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_SortingOrder
@@ -1137,11 +1154,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6.98459
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.08276
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1153,15 +1170,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1811,6 +1828,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1424d6607be3da43b5add525dbb4355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardView
+--- !u!4 &1027204208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2970550567748472801, guid: 8ad1d078430ee884fac60ce0e7c423e8, type: 3}
+  m_PrefabInstance: {fileID: 658237589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1104981546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104981547}
+  m_Layer: 0
+  m_Name: HideableStuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1104981547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104981546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.98459, y: 0.08276, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2018526278}
+  - {fileID: 1777734839}
+  - {fileID: 1027204208}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109785914
 GameObject:
   m_ObjectHideFlags: 0
@@ -3012,13 +3068,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1777734838}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.04598, y: 4.43355, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.06139, y: 4.35079, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 528346091}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1104981547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1810418215 stripped
 MonoBehaviour:
@@ -3365,13 +3421,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018526277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9.17, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.98459, y: -9.25276, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1830877849}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1104981547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2018526279
 MonoBehaviour:
@@ -3546,12 +3602,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1476986307}
+  - {fileID: 1104981547}
   - {fileID: 586863473}
   - {fileID: 601507363}
   - {fileID: 1026553092}
-  - {fileID: 2018526278}
-  - {fileID: 1777734839}
   - {fileID: 732924563}
   - {fileID: 1519226305}
   - {fileID: 1122467475}
-  - {fileID: 658237589}

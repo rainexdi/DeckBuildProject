@@ -1,9 +1,11 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
-public class CardView : MonoBehaviour
+
+public class CardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
@@ -12,7 +14,7 @@ public class CardView : MonoBehaviour
     [SerializeField] private GameObject wrapper;
     
     private Collider2D cardCollider;
-    private bool isCurrentlyHovered = false;
+    private SortingGroup sortingGroup;
 
     public event Action<CardView> OnCardPlayed;
 
@@ -21,40 +23,10 @@ public class CardView : MonoBehaviour
     private void Start()
     {
         cardCollider = GetComponent<Collider2D>();
+        sortingGroup = GetComponent<SortingGroup>();
 
     }
 
-    private void Update()
-    {
-        // Manual hover detection - reliable alternative to OnMouseEnter/Exit
-        DetectHover();
-        DetectClick();
-    }
-
-    private void DetectHover()
-    {
-        // Get mouse position in world coordinates
-        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-        
-
-        // Convert screen position to world position
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        
-        // Check if mouse point is inside this collider
-        bool isMouseOver = cardCollider.OverlapPoint(mouseWorldPos);
-
-        // Trigger events on state change
-        if (isMouseOver && !isCurrentlyHovered)
-        {
-            isCurrentlyHovered = true;
-            OnCardHoverEnter();
-        }
-        else if (!isMouseOver && isCurrentlyHovered)
-        {
-            isCurrentlyHovered = false;
-            OnCardHoverExit();
-        }
-    }
 
     public void SetCardData(Card card)
     {
@@ -66,24 +38,6 @@ public class CardView : MonoBehaviour
         if (imageSR != null) imageSR.sprite = card.Image;
     }
 
-    private void OnCardHoverEnter()
-    {
-
-        // wrapper.SetActive(false);
-        Vector3 hoverPos = new(0, -2, transform.position.z);
-        CardHoverSystem.Instance.Show(Card, hoverPos);
-    }
-
-    private void OnCardHoverExit()
-    {
-
-        if (CardHoverSystem.Instance != null)
-        {
-            CardHoverSystem.Instance.Hide();
-        }
-
-        // wrapper.SetActive(true);
-    }
 
     private void PlayCard()
     {
@@ -95,23 +49,26 @@ public class CardView : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnMouseClicked()
+    public void OnPointerEnter(PointerEventData eventData)
     {
+        Vector3 hoverPos = new Vector3(0, -2, transform.position.z);
+        sortingGroup.sortingOrder = 10;
+        CardHoverSystem.Instance.Show(Card, hoverPos);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        sortingGroup.sortingOrder = 3;
+        CardHoverSystem.Instance.Hide();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        OnPointerExit(eventData);
         PlayCard();
     }
 
-    private void DetectClick()
-    {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
 
-            if (cardCollider.OverlapPoint(mouseWorldPos))
-            {
-                OnMouseClicked();
-                OnCardHoverExit();
-            }
-        }
-    }
+
 }

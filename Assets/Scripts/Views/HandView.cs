@@ -13,6 +13,7 @@ public class HandView : MonoBehaviour
 
     public bool isFull => cards.Count >= maxCards;
     public bool hasSpace => cards.Count < maxCards;
+    private bool wasCardDrawPlayed = false;
 
     public IEnumerator AddCard (CardView cardView)
     {
@@ -22,14 +23,22 @@ public class HandView : MonoBehaviour
         }
 
         cards.Add(cardView);
+
         cardView.OnCardPlayed += RemoveCard;
+        cardView.Card.OnCardDrawPlayed += OnCardDrawPlayed;
+        cardView.Card.OnCardPlayedComplete += OnCardPlayedComplete;
+
         yield return UpdateCardPositions(0.15f);
     }
 
     private void RemoveCard(CardView cardView)
     {
         cards.Remove(cardView);
+
         cardView.OnCardPlayed -= RemoveCard;
+        cardView.Card.OnCardDrawPlayed -= OnCardDrawPlayed;
+        cardView.Card.OnCardPlayedComplete -= OnCardPlayedComplete;
+
         StartCoroutine(UpdateCardPositions(0.15f));
     }
 
@@ -57,5 +66,31 @@ public class HandView : MonoBehaviour
     public bool CanDrawMore(int cardsToDraw)
     {
         return cards.Count < cardsToDraw && cards.Count < maxCards;
+    }
+
+    private void OnCardDrawPlayed()
+    {
+        wasCardDrawPlayed = true;
+    }
+
+    private void OnCardPlayedComplete()
+    {
+        if (wasCardDrawPlayed)
+        {
+            wasCardDrawPlayed = false;
+            return;
+        }
+
+        ClearHand();
+    }
+
+    public void ClearHand()
+    {
+        foreach (CardView card in cards)
+        {
+            Destroy(card.gameObject);
+        }
+
+        cards.Clear();
     }
 }

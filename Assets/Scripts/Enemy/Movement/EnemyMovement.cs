@@ -8,11 +8,8 @@ public class EnemyMovement : MonoBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    private void Update()
-    {
-        MoveTowardsPlayer();
-    }
-    private void MoveTowardsPlayer()
+
+    public void MoveTowardsPlayer()
     {
         // Moves the enemy towards the player's position. You can modify this to include pathfinding or other movement patterns if desired.
         Vector3 direction = (playerTransform.position - transform.position).normalized;

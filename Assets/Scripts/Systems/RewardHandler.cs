@@ -14,7 +14,7 @@ public class RewardHandler : MonoBehaviour
     [SerializeField] private CountdownTimer countdownTimer;
     [SerializeField] private KillCounter killCounter;
 
-    private int cardsToDraw = 0;
+    private int cardsToDraw = 2;
     private int cardsDrawnThisReward = 0;
 
 
@@ -67,7 +67,7 @@ public class RewardHandler : MonoBehaviour
 
     private void OnTimerComplete()
     {
-        cardsToDraw = 0;
+        cardsToDraw = 2;
         cardsDrawnThisReward = 0;
 
         switch (killCounter.killCount)
