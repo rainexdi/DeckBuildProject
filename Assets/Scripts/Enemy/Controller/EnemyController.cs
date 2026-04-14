@@ -40,6 +40,7 @@ public class EnemyController : MonoBehaviour
 
         if (attackComponent is IAttackPattern attack)
         {
+            attack.SetEnemyStats(enemyStats);
             attackPattern = attack;
         }
     }

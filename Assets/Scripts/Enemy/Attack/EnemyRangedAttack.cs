@@ -2,10 +2,20 @@ using UnityEngine;
 
 public abstract class EnemyRangedAttack : MonoBehaviour, IAttackPattern
 {
-    [SerializeField] protected EnemyStatsSO enemyStats;
-    [SerializeField] protected Transform weaponTransform;
-    [SerializeField] protected Transform projectileSpawnPoint;
+    protected EnemyStatsSO enemyStats;
+    protected Transform weaponTransform;
+    protected Transform projectileSpawnPoint;
     protected float lastAttackTime;
+
+    private void OnEnable()
+    {
+        weaponTransform = transform.Find("Weapon");
+        projectileSpawnPoint = transform.Find("Weapon/spawnPoint");
+    }
+    public void SetEnemyStats(EnemyStatsSO stats)
+    {
+        enemyStats = stats;
+    }
 
     public void Execute(Transform target)
     {
